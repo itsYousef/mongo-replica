@@ -1,0 +1,16 @@
+version: '2'
+services:
+  mongodb:
+    image: mongo:4.4.23
+    container_name: mymongo
+    # command: --port 27017 --dbpath=/data/db --replSet rs0 --bind_ip localhost
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=dba
+    #   - MONGO_INITDB_ROOT_PASSWORD=s3cr3tpass
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data:/data/db
+      - ./rs-init.sh:/scripts/rs-init.sh
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs", "--port", "27017" ]

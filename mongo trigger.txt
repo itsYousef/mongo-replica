@@ -1,0 +1,41 @@
+{
+  _id: {
+    _data: '8264C0CDC0000000032B022C0100296E5A1004AC86343E34E04B5CA940F817E69584DC46645F6964006464BB8C15C4A72B1C184830DE0004'
+  },
+  operationType: 'update',
+  clusterTime: Timestamp { _bsontype: 'Timestamp', low_: 3, high_: 1690357184 },
+  ns: { db: 'fleet_watch', coll: 'distances' },
+  documentKey: { _id: 64bb8c15c4a72b1c184830de },
+  updateDescription: {
+    updatedFields: { departure: 647878c03a442d33d88eccac },
+    removedFields: []
+  }
+}
+
+-----------------------------------------
+{
+  _id: {
+    _data: '8264C0D049000000022B022C0100296E5A1004AC86343E34E04B5CA940F817E69584DC46645F6964006464C0D0490E1D1A46E00770DB0004'
+  },
+  operationType: 'insert',
+  clusterTime: Timestamp { _bsontype: 'Timestamp', low_: 2, high_: 1690357833 },
+  fullDocument: {
+    _id: 64c0d0490e1d1a46e00770db,
+    departure: 647878c03a442d33d88eccb8,
+    destination: 647878c03a442d33d88eccb5,
+    aircraftType: 647878c03a442d33d88ecb20,
+    cost: 60000
+  },
+  ns: { db: 'fleet_watch', coll: 'distances' },
+  documentKey: { _id: 64c0d0490e1d1a46e00770db }
+}
+-----------------------------------------
+{
+  _id: {
+    _data: '8264C0D093000000012B022C0100296E5A1004AC86343E34E04B5CA940F817E69584DC46645F6964006464C0D0490E1D1A46E00770DB0004'
+  },
+  operationType: 'delete',
+  clusterTime: Timestamp { _bsontype: 'Timestamp', low_: 1, high_: 1690357907 },
+  ns: { db: 'fleet_watch', coll: 'distances' },
+  documentKey: { _id: 64c0d0490e1d1a46e00770db }
+}
