@@ -2,6 +2,6 @@
 
 docker-compose up -d
 
-sleep 10
+sleep 5
 
-docker exec mymongo ./scripts/rs-init.sh 
+docker exec mongo1 ./scripts/rs-init.sh 

@@ -1,16 +1,53 @@
 version: '2'
 services:
-  mongodb:
+  mongo1:
     image: mongo:4.4.23
-    container_name: mymongo
+    container_name: mongo1
     # command: --port 27017 --dbpath=/data/db --replSet rs0 --bind_ip localhost
     # environment:
     #   - MONGO_INITDB_ROOT_USERNAME=dba
     #   - MONGO_INITDB_ROOT_PASSWORD=s3cr3tpass
+    networks:
+      - mongors-network
     ports:
       - 27017:27017
+    expose:
+      - 27017
+    links:
+      - mongo2
+      - mongo3
     volumes:
-      - ./data:/data/db
+      # - ./data/mongo1:/data/db
       - ./rs-init.sh:/scripts/rs-init.sh
     restart: always
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs", "--port", "27017" ]
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
+  mongo2:
+    image: mongo:4.4.23
+    container_name: mongo2
+    networks:
+      - mongors-network
+    ports:
+      - 27018:27017
+    expose:
+      - 27017
+    # volumes:
+    #   - ./data/mongo2:/data/db
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
+  mongo3:
+    image: mongo:4.4.23
+    container_name: mongo3
+    networks:
+      - mongors-network
+    ports:
+      - 27019:27017
+    expose:
+      - 27017
+    # volumes:
+    #   - ./data/mongo3:/data/db
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
+
+networks:
+  mongors-network:
+    driver: bridge
