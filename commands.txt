@@ -31,3 +31,15 @@ rs.initiate(rsconf);
 127.0.0.1 mongo2
 127.0.0.1 mongo3
 ----------------------------------------------------------------
+# creating default user for mongo instance
+use admin
+db.createUser(
+  {
+    user: "dba",
+    pwd: "123456"
+    roles: [ 
+      { role: "userAdminAnyDatabase", db: "admin" },
+      { role: "readWriteAnyDatabase", db: "admin" } 
+    ]
+  }
+)
