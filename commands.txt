@@ -30,16 +30,37 @@ rs.initiate(rsconf);
 127.0.0.1 mongo1
 127.0.0.1 mongo2
 127.0.0.1 mongo3
+-----------------------------------------------------------------
+# creating keyfile for mongo instances
+- openssl.exe rand -base64 756 > ./keyfile
+- chmod.exe 400 keyfile
 ----------------------------------------------------------------
-# creating default user for mongo instance
-use admin
+# creating admin user
+mongo <<EOF
+use admin;
 db.createUser(
   {
     user: "dba",
-    pwd: "123456"
+    pwd: "123456",
     roles: [ 
       { role: "userAdminAnyDatabase", db: "admin" },
       { role: "readWriteAnyDatabase", db: "admin" } 
     ]
   }
-)
+);
+EOF
+----------------------------------------------------------------
+#creating cluster admin
+#!/bin/bash
+
+mongo -u "dba" -p "123456" <<EOF
+use admin;
+db.createUser(
+  {
+    user: "rsAdmin",
+    pwd: "123456",
+    roles: [ { "role" : "clusterAdmin", "db" : "admin" } ]
+  }
+);
+EOF
+----------------------------------------------------------------
