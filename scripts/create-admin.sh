@@ -1,3 +1,5 @@
+#!/bin/bash
+
 mongo <<EOF
 use admin;
 db.createUser(

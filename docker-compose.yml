@@ -1,9 +1,10 @@
 version: '2'
 services:
   mongo1:
-    image: mongo:4.4.23
+    image: mongo:4.4-withkey
     container_name: mongo1
-    # command: --port 27017 --dbpath=/data/db --replSet rs0 --bind_ip localhost
+    # command: --bind_ip_all --replSet dbrs --keyFile /keys/keyfile
+    entrypoint: mongod --bind_ip_all --replSet dbrs --keyFile /keys/keyfile
     # environment:
     #   - MONGO_INITDB_ROOT_USERNAME=dba
     #   - MONGO_INITDB_ROOT_PASSWORD=s3cr3tpass
@@ -11,42 +12,46 @@ services:
       - mongors-network
     ports:
       - 27017:27017
-    expose:
-      - 27017
     links:
       - mongo2
       - mongo3
     volumes:
-      # - ./data/mongo1:/data/db
-      - ./rs-init.sh:/scripts/rs-init.sh
+      - ./data/mongo1:/data/db
+      - ./scripts:/scripts
+      # - ./keyfile:/keys/keyfile
     restart: always
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
   mongo2:
-    image: mongo:4.4.23
+    image: mongo:4.4-withkey
     container_name: mongo2
+    # command: --bind_ip_all --replSet dbrs --keyFile /keys/keyfile
+    entrypoint: ["mongod", "--bind_ip_all", "--replSet", "dbrs", "--keyFile", "/keys/keyfile"]
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=dba
+    #   - MONGO_INITDB_ROOT_PASSWORD=s3cr3tpass
     networks:
       - mongors-network
     ports:
       - 27018:27017
-    expose:
-      - 27017
-    # volumes:
-    #   - ./data/mongo2:/data/db
+    volumes:
+      - ./data/mongo2:/data/db
+      # - ./keyfile:/keys/keyfile
     restart: always
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
   mongo3:
-    image: mongo:4.4.23
+    image: mongo:4.4-withkey
     container_name: mongo3
+    # command: --bind_ip_all --replSet dbrs --keyFile /keys/keyfile
+    entrypoint: ["mongod", "--bind_ip_all", "--replSet", "dbrs", "--keyFile", "/keys/keyfile"]
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=dba
+    #   - MONGO_INITDB_ROOT_PASSWORD=s3cr3tpass
     networks:
       - mongors-network
     ports:
       - 27019:27017
-    expose:
-      - 27017
-    # volumes:
-    #   - ./data/mongo3:/data/db
+    volumes:
+      - ./data/mongo3:/data/db
+      # - ./keyfile:/keys/keyfile
     restart: always
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
 
 networks:
   mongors-network:
